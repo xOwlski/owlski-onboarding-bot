@@ -1,0 +1,23 @@
+{
+    "token": "OTk0MjI1MzQ0MTI1MDk1OTU4.GK8FFY.LvlHh3hhzL2-6fuOzYHcDrLlmbNsE3bUz758i4",
+    "guildId": "994225494222442626",
+    "onBoardingChannelId": "994226777163579442",
+    "userCountThreshold": 50,
+    "firstMissionRoleId": "994233671995363430",
+    "firstMissionChannelId": "994226858872803379",
+    "firstMissionQuestion": "Quel est le nom de l'entreprise ?",
+    "firstMissionAnswer": "Owlski",
+    "secondMissionRoleId": "994266589207736380",
+    "secondMissionChannelId": "994226928691191829",
+    "secondMissionQuestion": "Quel est le nom de l'entreprise ?",
+    "secondMissionAnswer": "Owlski",
+    "thirdMissionRoleId": "994273586565099590",
+    "thirdMissionChannelId": "994226961155117087",
+    "fourthMissionChannelId": "994274427913113650",
+    "fourthMissionRoleId": "994274454072995881",
+    "fifthMissionChannelId": "994274439309045800",
+    "fifthMissionRoleId": "994274481403072522",
+
+    "twitterApiKey": "6XAimBRlwUqnUTlCwaEn6vMcS",
+    "twitterApiSecret": "74wxSrouVb7MUx6kP0oJAaGsI3r6M5xmDDFvTAYWq2RWzgDUiU"
+}

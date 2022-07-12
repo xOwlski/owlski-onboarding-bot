@@ -1,4 +1,5 @@
 const config = require('./config.json');
+const fetch = require('node-fetch');
 
 const Discord = require('discord.js');
 const client = new Discord.Client({
@@ -10,22 +11,100 @@ const client = new Discord.Client({
     ]
 });
 
+const Twitter = require('twitter-api-v2');
+let twitterApi;
+
 const Database = require('easy-json-database');
 const db = new Database();
+
+const Tracker = require('@androz2091/discord-invites-tracker');
+const tracker = Tracker.init(client, {
+    fetchGuilds: true,
+    fetchVanity: true,
+    fetchAuditLogs: true
+});
+
+tracker.on('guildMemberAdd', (member, joinType, usedInvite) => {
+
+    if (usedInvite) {
+        db.set(`${member.id}_invites`, (db.get(`${member.id}_invites`) || 0) + 1);
+    }
+
+});
 
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
 
     sendOnBoardingMessage();
     makeSureContentExits();
+
+    (new Twitter.TwitterApi({
+        appKey: config.twitterApiKey,
+        appSecret: config.twitterApiSecret
+    })).appLogin().then((api) => twitterApi = api);
 });
 
 const embedColor = '#00BFFF';
 
-client.on('interactionCreate', (interaction) => {
+client.on('interactionCreate', async (interaction) => {
 
-    if (interaction.isChatInputCommand()) {
+    if (interaction.isButton()) {
 
+        if (interaction.customId === 'complete_third_mission') {
+
+            const twittycordUserData = await (await fetch(`https://twittycord.com/api/getUser?key=VAzvwKrH65&discordId=${interaction.user.id}`)).json();
+
+            let twitterId = twittycordUserData?.user?.connections?.find((con) => con.name === 'twitter')?.accountId;
+
+            if (!twitterId) {                
+                return interaction.reply({
+                    content: 'You are not connected to Twitter. Please connect your Twitter account first.',
+                    ephemeral: true
+                });
+            }
+            
+            const followers = await twitterApi.v2.followers(config.twitterUserId);
+            const followerIds = followers?.data?.map((follower) => follower.id) || [];
+
+            if (!followerIds.includes(twitterId)) {
+                return interaction.reply({
+                    content: 'You are not following the correct Twitter account. Please follow the correct Twitter account first.',
+                    ephemeral: true
+                });
+            }
+
+            const member = interaction.guild.members.cache.get(interaction.user.id);
+            if (member) {
+                member.roles.remove(config.thirdMissionRoleId);
+                member.roles.add(config.fourthMissionRoleId);
+                interaction.reply(`${interaction.user} has succeeded the third mission, congrats!`).then(() => {
+                    setTimeout(() => interaction.deleteReply(), 3_000);
+                });
+            }
+
+        }
+
+        if (interaction.customId === 'complete_fourth_mission') {
+
+            const inviteCount = db.get(`${interaction.user.id}_invites`) || 0;
+
+            if (inviteCount < 2) {
+                return interaction.reply({
+                    content: 'You need to invite two friends! Your current invited friends count is ' + inviteCount,
+                    ephemeral: true
+                });
+            }
+
+            const member = interaction.guild.members.cache.get(interaction.user.id);
+            if (member) {
+                member.roles.remove(config.thirdMissionRoleId);
+                member.roles.add(config.fourthMissionRoleId);
+                interaction.reply(`${interaction.user} has succeeded the third mission, congrats!`).then(() => {
+                    setTimeout(() => interaction.deleteReply(), 3_000);
+                });
+            }
+
+        }
 
     }
 
@@ -125,6 +204,25 @@ const makeSureContentExits = () => {
                         .setCustomId(`complete_third_mission`)
                 ]);
             client.channels.cache.get(config.thirdMissionChannelId).send({
+                embeds: [embed],
+                components: [row]
+            });
+        }
+    });
+    client.channels.cache.get(config.fourthMissionChannelId).messages.fetch().then((messages) => {
+        if (messages.size === 0) {
+            const embed = new Discord.EmbedBuilder()
+                .setColor(embedColor)
+                .setTitle('Fourth Mission')
+                .setDescription('The last real mission is here, before entering the funny part! Please invite two friends to this server and use the button below.\n\n:warning: Use a custom invite code to invite your friends! Click on "Create Invite" at the top of the server and copy the URL.');
+            const row = new Discord.ActionRowBuilder()
+                .addComponents([
+                    new Discord.ButtonBuilder()
+                        .setLabel(`I invited two friends!`)
+                        .setStyle(Discord.ButtonStyle.Success)
+                        .setCustomId(`complete_fourth_mission`)
+                ]);
+            client.channels.cache.get(config.fourthMissionChannelId).send({
                 embeds: [embed],
                 components: [row]
             });

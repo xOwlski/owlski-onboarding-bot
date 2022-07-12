@@ -11,10 +11,12 @@ const { TwitterApi } = require('twitter-api-v2');
     // Tell typescript it's a readonly app
     const roClient = twitterClient.readOnly;
 
-    // Play with the built in methods
-    const user = await roClient.v2.userByUsername('plhery');
-    await twitterClient.v1.tweet('Hello, this is a test.');
-    // You can upload media easily!
-    await twitterClient.v1.uploadMedia('./big-buck-bunny.mp4');
+    roClient.appLogin().then(async (api) => {
+
+        // Play with the built in methods
+        const user = await api.v2.followers('1311173419732475906');
+        console.log(user)
+    })
+
 
 })();

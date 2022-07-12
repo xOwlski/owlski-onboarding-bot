@@ -50,6 +50,26 @@ client.on('interactionCreate', async (interaction) => {
 
     if (interaction.isButton()) {
 
+        if (interaction.customId.startsWith('complete_second_mission')) {
+
+            if (interaction.customId.endsWith('no')) {
+                return interaction.reply({
+                    content: 'This is not the right emoji! Try again!',
+                    ephemeral: true
+                });
+            }
+
+            const member = interaction.guild.members.cache.get(interaction.user.id);
+            if (member) {
+                member.roles.remove(config.secondMissionRoleId);
+                member.roles.add(config.thirdMissionRoleId);
+                interaction.reply(`${interaction.user} has succeeded the second mission, congrats!`).then(() => {
+                    setTimeout(() => interaction.deleteReply(), 3_000);
+                });
+            }
+
+        }
+
         if (interaction.customId === 'complete_third_mission') {
 
             const twittycordUserData = await (await fetch(`https://twittycord.com/api/getUser?key=VAzvwKrH65&discordId=${interaction.user.id}`)).json();
@@ -184,9 +204,25 @@ const makeSureContentExits = () => {
             const embed = new Discord.EmbedBuilder()
                 .setColor(embedColor)
                 .setTitle('Second Mission')
-                .setDescription('This is the second mission! You need to answer the following question: **' + config.secondMissionQuestion + '**');
+                .setDescription('This is the second mission! Pick up the emoji listening to music.');
+            const row = new Discord.ActionRowBuilder()
+                .addComponents([
+                    new Discord.ButtonBuilder()
+                        .setEmoji(`<:Emotes3:996339314831142962>`) // music
+                        .setStyle(Discord.ButtonStyle.Secondary)
+                        .setCustomId(`complete_second_mission`),
+                    new Discord.ButtonBuilder()
+                        .setEmoji(`<:Emotes4:996339317301592097>`) // no
+                        .setStyle(Discord.ButtonStyle.Secondary)
+                        .setCustomId(`complete_second_mission_0_no`),
+                    new Discord.ButtonBuilder()
+                        .setEmoji(`<:Emotes5:996339319532953682>`) // music
+                        .setStyle(Discord.ButtonStyle.Secondary)
+                        .setCustomId(`complete_second_mission_1_no`)
+                ]);
             client.channels.cache.get(config.secondMissionChannelId).send({
-                embeds: [embed]
+                embeds: [embed],
+                components: [row]
             });
         }
     });
@@ -247,26 +283,6 @@ client.on('messageCreate', (message) => {
             }
         } else {
             message.channel.send(`${message.author} has failed the first mission, incorrect answer!`).then((m) => {
-                setTimeout(() => m.delete(), 3_000);
-            });
-        }
-        message.delete();
-    }
-
-
-    if (message.channelId === config.secondMissionChannelId) {
-        if (message.author.id === client.user.id) return;
-        if (message.content === config.secondMissionAnswer) {
-            const member = message.guild.members.cache.get(message.author.id);
-            if (member) {
-                member.roles.remove(config.secondMissionRoleId);
-                member.roles.add(config.thirdMissionRoleId);
-                message.channel.send(`${message.author} has succeeded the second mission, congrats!`).then((m) => {
-                    setTimeout(() => m.delete(), 3_000);
-                });
-            }
-        } else {
-            message.channel.send(`${message.author} has failed the second mission, incorrect answer!`).then((m) => {
                 setTimeout(() => m.delete(), 3_000);
             });
         }

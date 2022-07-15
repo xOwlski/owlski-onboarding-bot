@@ -14,7 +14,7 @@ const { TwitterApi } = require('twitter-api-v2');
     roClient.appLogin().then(async (api) => {
 
         // Play with the built in methods
-        const user = await api.v2.followers('1311173419732475906');
+        const user = await api.v2.userByUsername('xowlski');
         console.log(user)
     })
 

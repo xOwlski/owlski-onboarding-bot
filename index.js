@@ -126,6 +126,22 @@ client.on('interactionCreate', async (interaction) => {
 
         }
 
+        if (interaction.customId.startsWith('complete_fifth_mission')) {
+
+            const roleName = interaction.customId.split('_').at(-1);
+            const roleId = interaction.guild.roles.cache.get(config[`${roleName}RoleId`]);
+
+            const member = interaction.guild.members.cache.get(interaction.user.id);
+            if (member) {
+                member.roles.add(roleId);
+                member.roles.remove(config.fifthMissionRoleId);
+                interaction.reply(`${interaction.user} has succeeded the fifth mission, congrats!`).then(() => {
+                    setTimeout(() => interaction.deleteReply(), 3_000);
+                });
+            }
+
+        }
+
     }
 
 });
@@ -243,6 +259,29 @@ const makeSureContentExits = () => {
                         .setCustomId(`complete_fourth_mission`)
                 ]);
             client.channels.cache.get(config.fourthMissionChannelId).send({
+                embeds: [embed],
+                components: [row]
+            });
+        }
+    });
+    client.channels.cache.get(config.fifthMissionChannelId).messages.fetch().then((messages) => {
+        if (messages.size === 0) {
+            const embed = new Discord.EmbedBuilder()
+                .setColor(embedColor)
+                .setTitle('Fifth Mission')
+                .setDescription('Close or Near? Don\'t take too much time to think, just click one button below ;)');
+            const row = new Discord.ActionRowBuilder()
+                .addComponents([
+                    new Discord.ButtonBuilder()
+                        .setLabel(`Close`)
+                        .setStyle(Discord.ButtonStyle.Primary)
+                        .setCustomId(`complete_fifth_mission_close`),
+                    new Discord.ButtonBuilder()
+                        .setLabel(`Near`)
+                        .setStyle(Discord.ButtonStyle.Primary)
+                        .setCustomId(`complete_fifth_mission_near`)
+                ]);
+            client.channels.cache.get(config.fifthMissionChannelId).send({
                 embeds: [embed],
                 components: [row]
             });

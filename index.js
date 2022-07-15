@@ -204,25 +204,9 @@ const makeSureContentExits = () => {
             const embed = new Discord.EmbedBuilder()
                 .setColor(embedColor)
                 .setTitle('Second Mission')
-                .setDescription('This is the second mission! Pick up the emoji listening to music.');
-            const row = new Discord.ActionRowBuilder()
-                .addComponents([
-                    new Discord.ButtonBuilder()
-                        .setEmoji(`<:Emotes3:996339314831142962>`) // music
-                        .setStyle(Discord.ButtonStyle.Secondary)
-                        .setCustomId(`complete_second_mission`),
-                    new Discord.ButtonBuilder()
-                        .setEmoji(`<:Emotes4:996339317301592097>`) // no
-                        .setStyle(Discord.ButtonStyle.Secondary)
-                        .setCustomId(`complete_second_mission_0_no`),
-                    new Discord.ButtonBuilder()
-                        .setEmoji(`<:Emotes5:996339319532953682>`) // music
-                        .setStyle(Discord.ButtonStyle.Secondary)
-                        .setCustomId(`complete_second_mission_1_no`)
-                ]);
+                .setDescription('This is the second mission! Pick up the Owlski emoji listening to music and send it in the channel.');
             client.channels.cache.get(config.secondMissionChannelId).send({
-                embeds: [embed],
-                components: [row]
+                embeds: [embed]
             });
         }
     });
@@ -231,7 +215,7 @@ const makeSureContentExits = () => {
             const embed = new Discord.EmbedBuilder()
                 .setColor(embedColor)
                 .setTitle('Third Mission')
-                .setDescription('Congrats, it was a quite hard to come here but you\'ve succeeded. Now, only our trusted users will be able to enter the server.\n\n**Step 1**: please follow us at **[@Owlski_](https://twitter.com/Owlski_)**\n\n**Step 2**: login to **[Twittycord](https://twittycord.com/user/dashboard)**, connect your Twitter.\n\n**Step 3**: click the button below');
+                .setDescription('Congrats, it was a quite hard to come here but you\'ve succeeded. Now, only our trusted users will be able to enter the server.\n\n**Step 1**: please follow us at **[@xowlski](https://twitter.com/xowlski)**\n\n**Step 2**: login to **[Twittycord](https://twittycord.com/user/dashboard)**, connect your Twitter.\n\n**Step 3**: click the button below');
             const row = new Discord.ActionRowBuilder()
                 .addComponents([
                     new Discord.ButtonBuilder()
@@ -283,6 +267,25 @@ client.on('messageCreate', (message) => {
             }
         } else {
             message.channel.send(`${message.author} has failed the first mission, incorrect answer!`).then((m) => {
+                setTimeout(() => m.delete(), 3_000);
+            });
+        }
+        message.delete();
+    }
+
+    if (message.channelId === config.secondMissionChannelId) {
+        if (message.author.id === client.user.id) return;
+        if (message.content.includes('996339314831142962')) {
+            const member = message.guild.members.cache.get(message.author.id);
+            if (member) {
+                member.roles.remove(config.secondMissionRoleId);
+                member.roles.add(config.thirdMissionRoleId);
+                message.channel.send(`${message.author} has succeeded the second mission, congrats!`).then((m) => {
+                    setTimeout(() => m.delete(), 3_000);
+                });
+            }
+        } else {
+            message.channel.send(`${message.author} has failed the second mission, incorrect answer!`).then((m) => {
                 setTimeout(() => m.delete(), 3_000);
             });
         }

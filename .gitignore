@@ -1,2 +1,6 @@
 # node
 node_modules
+
+# config & db
+config.json
+db.json

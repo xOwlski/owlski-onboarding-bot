@@ -72,7 +72,7 @@ client.on('interactionCreate', async (interaction) => {
 
         if (interaction.customId === 'complete_third_mission') {
 
-            const twittycordUserData = await (await fetch(`https://twittycord.com/api/getUser?key=VAzvwKrH65&discordId=${interaction.user.id}`)).json();
+            const twittycordUserData = await (await fetch(`https://twittycord.com/api/getUser?key=${config.twittycordKey}&discordId=${interaction.user.id}`)).json();
 
             let twitterId = twittycordUserData?.user?.connections?.find((con) => con.name === 'twitter')?.accountId;
 

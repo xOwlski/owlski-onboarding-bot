@@ -22,5 +22,7 @@
 
     "twitterApiKey": "",
     "twitterApiSecret": "",
-    "twitterUserId": "1522515100556529666"
+    "twitterUserId": "1522515100556529666",
+    
+    "twittycordKey": ""
 }

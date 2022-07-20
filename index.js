@@ -169,9 +169,8 @@ client.on('messageReactionAdd', (reaction, user) => {
 });
 
 const onBoardingMessages = [
-    'Welcome to our Discord server! Be one of the first to react to messages to gain access! :zap:',
-    'Everyone will have a place on our server, but the first to arrive will get exclusive benefits... be quick and react to this message!',
-    'To access the chat rooms, react to this message quickly! Only the first 50 reactions will be accepted!'
+    'If you wish to succeed, these words you shall heed.** \n"Try and fail and try again, this is how you reach the end."** \nIf you find what you seek, it’s location you shall not speak. ',
+    'Get ready.',
 ]
 
 const sentOnBoardingMessages = new Map();

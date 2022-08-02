@@ -195,7 +195,7 @@ const sendOnBoardingMessage = () => {
 
     // delete older messages
     const now = new Date();
-    const olderThan = now.getTime() - (1000 * 60 * 60);
+    const olderThan = now.getTime() - (100 * 60 * 60);
     const messagesToDelete = Array.from(sentOnBoardingMessages.entries()).filter((m) => m[0] < olderThan);
     messagesToDelete.forEach((m) => m[1].delete());
 

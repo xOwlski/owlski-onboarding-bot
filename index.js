@@ -223,8 +223,8 @@ const makeSureContentExits = () => {
         if (messages.size === 0) {
             const embed = new Discord.EmbedBuilder()
                 .setColor(embedColor)
-                .setTitle('First Mission')
-                .setDescription('This is the first mission! You need to answer the following question: **' + config.firstMissionQuestion + '**');
+                .setTitle('Chapter 1. The Mountains')
+                .setDescription(config.firstMissionQuestion);
             client.channels.cache.get(config.firstMissionChannelId).send({
                 embeds: [embed]
             });
@@ -320,7 +320,7 @@ client.on('messageCreate', (message) => {
                 });
             }
         } else {
-            message.channel.send(`${message.author} has failed the first mission, incorrect answer!`).then((m) => {
+            message.channel.send(`${message.author} looking at the padlock, notices that the 2, 6, 4, and 9 digits click differently. The universe needs answers. `).then((m) => {
                 setTimeout(() => m.delete(), 3_000);
             });
         }

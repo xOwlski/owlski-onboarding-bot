@@ -171,6 +171,22 @@ client.on('messageReactionAdd', (reaction, user) => {
 const onBoardingMessages = [
     'If you wish to succeed, these words you shall heed.** \n"Try and fail and try again, this is how you reach the end."** \nIf you find what you seek, it’s location you shall not speak. ',
     'Get ready.',
+    'Roses are red, Violets are blue, NFTs are awesome.',
+    'Do you really think you have what it takes to pass the gates?',
+    '50% of the waiting members won’t manage to pass the gates.',
+    'Oh wow.',
+    'You don’t know anything but soon you’ll know more than your ETH friend.',
+    'It’s NOT OKAY.',
+    'The Shadow will soon let you off the waiting line.',
+    'Wen mint is no question here. Everything is planned, things will be so smooth for you.',
+    'The Shadow is mad that you still didn’t understand how to pass the line.',
+    'What’s a DAO ? It’s a blockchain held program that allows decentralized fund management.',
+    'The Shadow likes giving hints but only if you react quickly enough.',
+    'Get familiar with the meme mythology.',
+    'If somebody attacks you with a meme, you should answer with another meme.',
+    'Bruh.',
+    'The shadow is still unsure about what to do with people blocked here. They will certainly not be allowed in.',
+    'The Shadow likes giving hints but only if you react quickly enough.',
 ]
 
 const sentOnBoardingMessages = new Map();

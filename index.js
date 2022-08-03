@@ -83,10 +83,25 @@ client.on('interactionCreate', async (interaction) => {
                 });
             }
             
-            const followers = await twitterApi.v2.followers(config.twitterUserId);
-            const followerIds = followers?.data?.map((follower) => follower.id) || [];
+            let following = false;
+            let continueFollowersFetching = true;
+            let nextToken = null;
 
-            if (!followerIds.includes(twitterId)) {
+            while (continueFollowersFetching) {
+                const followers = await twitterApi.v2.followers(config.twitterUserId, {
+                    max_results: 1000,
+                    pagination_token: nextToken
+                });
+                const followerIds = followers?.data?.map((follower) => follower.id) || [];
+                if (followerIds.includes(twitterId)) {
+                    following = true;
+                }
+                nextToken = followers.meta.next_token;
+                continueFollowersFetching  = nextToken && followers.length === 1000;
+                console.log(`nextToken: ${nextToken}, continueFollowersFetching: ${continueFollowersFetching}`);
+            }
+
+            if (!following) {
                 return interaction.reply({
                     content: 'You are not following the shadow, you will get lost.',
                     ephemeral: true

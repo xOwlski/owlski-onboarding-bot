@@ -88,7 +88,7 @@ client.on('interactionCreate', async (interaction) => {
 
             if (!followerIds.includes(twitterId)) {
                 return interaction.reply({
-                    content: 'You are not following the correct Twitter account. Please follow the correct Twitter account first.',
+                    content: 'You are not following the shadow, you will get lost',
                     ephemeral: true
                 });
             }

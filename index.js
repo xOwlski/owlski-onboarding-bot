@@ -54,7 +54,7 @@ client.on('interactionCreate', async (interaction) => {
 
             if (interaction.customId.endsWith('no')) {
                 return interaction.reply({
-                    content: 'This is not the right emoji! Try again!',
+                    content: 'This is not the right move!',
                     ephemeral: true
                 });
             }
@@ -78,7 +78,7 @@ client.on('interactionCreate', async (interaction) => {
 
             if (!twitterId) {                
                 return interaction.reply({
-                    content: 'You are not connected to Twitter. Please connect your Twitter account first.',
+                    content: 'You have not connected your twitter on the second step.',
                     ephemeral: true
                 });
             }
@@ -88,7 +88,7 @@ client.on('interactionCreate', async (interaction) => {
 
             if (!followerIds.includes(twitterId)) {
                 return interaction.reply({
-                    content: 'You are not following the shadow, you will get lost',
+                    content: 'You are not following the shadow, you will get lost.',
                     ephemeral: true
                 });
             }

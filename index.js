@@ -63,7 +63,7 @@ client.on('interactionCreate', async (interaction) => {
             if (member) {
                 member.roles.remove(config.secondMissionRoleId);
                 member.roles.add(config.thirdMissionRoleId);
-                interaction.reply(`${interaction.user} has succeeded the second mission, congrats!`).then(() => {
+                interaction.reply(`${interaction.user} escapes the frostbite`).then(() => {
                     setTimeout(() => interaction.deleteReply(), 3_000);
                 });
             }
@@ -97,7 +97,7 @@ client.on('interactionCreate', async (interaction) => {
             if (member) {
                 member.roles.remove(config.thirdMissionRoleId);
                 member.roles.add(config.fourthMissionRoleId);
-                interaction.reply(`${interaction.user} has succeeded the third mission, congrats!`).then(() => {
+                interaction.reply(`${interaction.user} escapes freezing and enters the tundra.`).then(() => {
                     setTimeout(() => interaction.deleteReply(), 3_000);
                 });
             }
@@ -110,7 +110,7 @@ client.on('interactionCreate', async (interaction) => {
 
             if (inviteCount < 2) {
                 return interaction.reply({
-                    content: 'You need to invite two friends! Your current invited friends count is ' + inviteCount,
+                    content: 'Use a custom invite code to invite your friends! You have ' + inviteCount + 'mates right now',
                     ephemeral: true
                 });
             }
@@ -119,7 +119,7 @@ client.on('interactionCreate', async (interaction) => {
             if (member) {
                 member.roles.remove(config.thirdMissionRoleId);
                 member.roles.add(config.fourthMissionRoleId);
-                interaction.reply(`${interaction.user} has succeeded the third mission, congrats!`).then(() => {
+                interaction.reply(`${interaction.user} escapes freezing and enters the tundra.`).then(() => {
                     setTimeout(() => interaction.deleteReply(), 3_000);
                 });
             }
@@ -135,7 +135,7 @@ client.on('interactionCreate', async (interaction) => {
             if (member) {
                 member.roles.add(roleId);
                 member.roles.remove(config.fifthMissionRoleId);
-                interaction.reply(`${interaction.user} has succeeded the fifth mission, congrats!`).then(() => {
+                interaction.reply(`${interaction.user} enters Owlski`).then(() => {
                     setTimeout(() => interaction.deleteReply(), 3_000);
                 });
             }
@@ -223,7 +223,7 @@ const makeSureContentExits = () => {
         if (messages.size === 0) {
             const embed = new Discord.EmbedBuilder()
                 .setColor(embedColor)
-                .setTitle('Chapter 1. The Mountains')
+                .setTitle('Who is the shadow?')
                 .setDescription(config.firstMissionQuestion);
             client.channels.cache.get(config.firstMissionChannelId).send({
                 embeds: [embed]
@@ -234,8 +234,8 @@ const makeSureContentExits = () => {
         if (messages.size === 0) {
             const embed = new Discord.EmbedBuilder()
                 .setColor(embedColor)
-                .setTitle('Second Mission')
-                .setDescription('This is the second mission! Pick up the Owlski emoji listening to music and send it in the channel.');
+                .setTitle('The shadow is curious')
+                .setDescription(config.secondMissionQuestion);
             client.channels.cache.get(config.secondMissionChannelId).send({
                 embeds: [embed]
             });
@@ -245,12 +245,12 @@ const makeSureContentExits = () => {
         if (messages.size === 0) {
             const embed = new Discord.EmbedBuilder()
                 .setColor(embedColor)
-                .setTitle('Third Mission')
-                .setDescription('Congrats, it was a quite hard to come here but you\'ve succeeded. Now, only our trusted users will be able to enter the server.\n\n**Step 1**: please follow us at **[@xowlski](https://twitter.com/xowlski)**\n\n**Step 2**: login to **[Twittycord](https://twittycord.com/user/dashboard)**, connect your Twitter.\n\n**Step 3**: click the button below');
+                .setTitle('The shadow requires trust')
+                .setDescription('The trap opens in a blow and you see thousands of silhouettes running. The yellow eyes are still watching in the dark. \r\n\r\nYou take the ladder and find yourself in a long corridor with torches on the side. All the flapping wings are gone and you only see the yellow eyed shadow waiting at the left side of a cross path at the end of the tunnel.\r\n\r\nThe shadow turns around and you can see shining feathers on its back. It\u2019s now talking with a deep calm voice: \u201CChoose wisely, I will help you. Follow me.\u201D\r\n\r\n`Follow the shadow on twitter:`\r\n\r\nhttps:\/\/twitter.com\/xowlski\r\n\r\n`Connect and choose your path`\r\n\r\nhttps:\/\/twittycord.com\/user\/dashboard\r\n');
             const row = new Discord.ActionRowBuilder()
                 .addComponents([
                     new Discord.ButtonBuilder()
-                        .setLabel(`It's followed, let's go!`)
+                        .setLabel(`Follow the shadow.`)
                         .setStyle(Discord.ButtonStyle.Success)
                         .setCustomId(`complete_third_mission`)
                 ]);
@@ -264,12 +264,12 @@ const makeSureContentExits = () => {
         if (messages.size === 0) {
             const embed = new Discord.EmbedBuilder()
                 .setColor(embedColor)
-                .setTitle('Fourth Mission')
-                .setDescription('The last real mission is here, before entering the funny part! Please invite two friends to this server and use the button below.\n\n:warning: Use a custom invite code to invite your friends! Click on "Create Invite" at the top of the server and copy the URL.');
+                .setTitle('The shadow is a team')
+                .setDescription('You follow the shadow in dark long tunnels, following feather sounds and yellow eyes. \r\n\r\nThe more you walk and the more you feel pain in your back, like something is erupting from your body and coming out almost as a liberation. \r\n\r\nYou arrive in a bright room but the shadow has run away and you are left again on your own.\r\n\r\nFacing you is a massive wooden door with carves exposing drawing from another age. All the characters are fighting against figures powered by an evil diamond. \r\n\r\nThe door has three distinctive marks designed to support the strength of pushing forces. \r\n\r\nYou try forcing the door and it moves a little but you are certain that your strength alone is not enough. \r\n\r\nYou\u2019ll need your friends to help.\r\n');
             const row = new Discord.ActionRowBuilder()
                 .addComponents([
                     new Discord.ButtonBuilder()
-                        .setLabel(`I invited two friends!`)
+                        .setLabel(`Open the gate`)
                         .setStyle(Discord.ButtonStyle.Success)
                         .setCustomId(`complete_fourth_mission`)
                 ]);
@@ -283,8 +283,8 @@ const makeSureContentExits = () => {
         if (messages.size === 0) {
             const embed = new Discord.EmbedBuilder()
                 .setColor(embedColor)
-                .setTitle('Fifth Mission')
-                .setDescription('Close or Near? Don\'t take too much time to think, just click one button below ;)');
+                .setTitle('The shadow is categoric')
+                .setDescription('What was some instant before an open wound in your back suddenly flies away and leaves a sparkling magic in your gutter.\r\n\r\nYou have entered a kingdom of cooperation and support. All the yellow eyes are joining you. \r\n\r\nYou have no memories from your past but here will be built your future. \r\n\r\nLooking behind, you take a decision but staying near the door is still your option.');
             const row = new Discord.ActionRowBuilder()
                 .addComponents([
                     new Discord.ButtonBuilder()
@@ -315,7 +315,7 @@ client.on('messageCreate', (message) => {
             if (member) {
                 member.roles.remove(config.firstMissionRoleId);
                 member.roles.add(config.secondMissionRoleId);
-                message.channel.send(`${message.author} has succeeded the first mission, congrats!`).then((m) => {
+                message.channel.send(`${message.author} moves out of the cold`).then((m) => {
                     setTimeout(() => m.delete(), 3_000);
                 });
             }
@@ -334,12 +334,12 @@ client.on('messageCreate', (message) => {
             if (member) {
                 member.roles.remove(config.secondMissionRoleId);
                 member.roles.add(config.thirdMissionRoleId);
-                message.channel.send(`${message.author} has succeeded the second mission, congrats!`).then((m) => {
+                message.channel.send(`${message.author} escapes the frostbite`).then((m) => {
                     setTimeout(() => m.delete(), 3_000);
                 });
             }
         } else {
-            message.channel.send(`${message.author} has failed the second mission, incorrect answer!`).then((m) => {
+            message.channel.send(`${message.author} Dancing is not made of writing. You have to move and search.`).then((m) => {
                 setTimeout(() => m.delete(), 3_000);
             });
         }

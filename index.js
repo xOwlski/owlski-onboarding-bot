@@ -250,7 +250,7 @@ const makeSureContentExits = () => {
             const row = new Discord.ActionRowBuilder()
                 .addComponents([
                     new Discord.ButtonBuilder()
-                        .setLabel(`Follow the shadow.`)
+                        .setLabel(`Walk with the shadow.`)
                         .setStyle(Discord.ButtonStyle.Success)
                         .setCustomId(`complete_third_mission`)
                 ]);

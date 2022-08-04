@@ -344,7 +344,7 @@ client.on('messageCreate', (message) => {
 
     if (message.channelId === config.secondMissionChannelId) {
         if (message.author.id === client.user.id) return;
-        if (message.content.includes('996339314831142962')) {
+        if (message.content.includes('<:29:1004373968058335312>')) {
             const member = message.guild.members.cache.get(message.author.id);
             if (member) {
                 member.roles.remove(config.secondMissionRoleId);

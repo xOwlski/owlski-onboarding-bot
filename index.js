@@ -212,7 +212,7 @@ const sendOnBoardingMessage = () => {
     const now = new Date();
     const olderThan = now.getTime() - (10 * 60 * 60);
     const messagesToDelete = Array.from(sentOnBoardingMessages.entries()).filter((m) => m[0] < olderThan);
-    messagesToDelete.forEach((m) => m[1].delete());
+    messagesToDelete.forEach((m) => m[1].delete().catch(() => {}));
 
     // between 0 and 2
     const random = Math.random() * 3;
@@ -331,15 +331,15 @@ client.on('messageCreate', (message) => {
                 member.roles.remove(config.firstMissionRoleId);
                 member.roles.add(config.secondMissionRoleId);
                 message.channel.send(`${message.author} moves out of the cold`).then((m) => {
-                    setTimeout(() => m.delete(), 3_000);
+                    setTimeout(() => m.delete().catch(() => {}), 3_000);
                 });
             }
         } else {
             message.channel.send(`${message.author} looking at the padlock, notices that the 2, 6, 4, and 9 digits click differently. The universe needs answers. `).then((m) => {
-                setTimeout(() => m.delete(), 3_000);
+                setTimeout(() => m.delete().catch(() => {}), 3_000);
             });
         }
-        message.delete();
+        message.delete().catch(() => {});
     }
 
     if (message.channelId === config.secondMissionChannelId) {
@@ -350,15 +350,15 @@ client.on('messageCreate', (message) => {
                 member.roles.remove(config.secondMissionRoleId);
                 member.roles.add(config.thirdMissionRoleId);
                 message.channel.send(`${message.author} escapes the frostbite`).then((m) => {
-                    setTimeout(() => m.delete(), 3_000);
+                    setTimeout(() => m.delete().catch(() => {}), 3_000);
                 });
             }
         } else {
             message.channel.send(`${message.author} Dancing is not made of writing. You have to move and search.`).then((m) => {
-                setTimeout(() => m.delete(), 3_000);
+                setTimeout(() => m.delete().catch(() => {}), 3_000);
             });
         }
-        message.delete();
+        message.delete().catch(() => {});
     }
 
 });

@@ -90,7 +90,7 @@ client.on('interactionCreate', async (interaction) => {
             while (continueFollowersFetching) {
                 const followers = await twitterApi.v2.followers(config.twitterUserId, {
                     max_results: 1000,
-                    pagination_token: nextToken
+                    pagination_token: nextToken || undefined
                 });
                 const followerIds = followers?.data?.map((follower) => follower.id) || [];
                 if (followerIds.includes(twitterId)) {

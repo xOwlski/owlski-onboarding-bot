@@ -125,7 +125,7 @@ client.on('interactionCreate', async (interaction) => {
 
             if (inviteCount < 2) {
                 return interaction.reply({
-                    content: 'Use a custom invite code to invite your friends! You have ' + inviteCount + ' mates right now',
+                    content: 'Use a custom invite code to invite your two best friends! You have ' + inviteCount + ' mates right now',
                     ephemeral: true
                 });
             }

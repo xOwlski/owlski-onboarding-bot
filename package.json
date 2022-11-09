@@ -3,6 +3,7 @@
     "@androz2091/discord-invites-tracker": "^1.1.1",
     "discord.js": "^14.0.0-dev.1657109083-8198da5",
     "easy-json-database": "^1.5.0",
+    "mongodb": "^4.11.0",
     "node-fetch": "^2.6.7",
     "twitter-api-v2": "^1.12.3"
   }
